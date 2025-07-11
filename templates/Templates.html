@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom right, #74ebd5, #ACB6E5);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.85);
+            border-radius: 8px;
+            padding: 20px;
+            max-width: 500px;
+            margin: 60px auto;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        input, button {
+            padding: 10px;
+            width: 90%;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #6c9bcf; /* soft pastel blue */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .day {
+            background-color: #e0f7fa;
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+
+        h1 {
+            font-size: 26px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌤️ Weather App</h1>
+        <form method="POST">
+            <input type="text" name="city" placeholder="Enter city name" required value="{{ request.form.city }}">
+            <button type="submit">🔍 Get Weather</button>
+        </form>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+        {% if weather %}
+            <h3>5-Day Forecast:</h3>
+            {% for day in weather %}
+                <div class="day">
+                    📅 <strong>Date:</strong> {{ day.date }}<br>
+                    🌡️ <strong>Temperature:</strong> {{ day.temp }} °C<br>
+                    🌥️ <strong>Description:</strong> {{ day.description }}<br>
+                    💧 <strong>Humidity:</strong> {{ day.humidity }}%
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</body>
+</html>
